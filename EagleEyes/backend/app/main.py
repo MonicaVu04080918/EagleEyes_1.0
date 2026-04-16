@@ -67,7 +67,8 @@ def get_permit_name(permit_id: str, token: str):
     except requests.RequestException as e:
         print(f"Error fetching permit name for {permit_id}: {e}")
     return "Unknown"
-
+from .database import engine, Base
+Base.metadata.create_all(bind=engine)
 @app.post("/register", status_code=status.HTTP_201_CREATED)
 def register_user(user: UserCreate, db: Session = Depends(get_db)):
     """Registers new user and save them to the database"""
